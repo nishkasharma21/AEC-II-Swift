@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C917C6302C39AB5A0041AEC9 /* PlaybackPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917C62F2C39AB5A0041AEC9 /* PlaybackPreview.swift */; };
+		C917C6342C39C98B0041AEC9 /* StatisticsPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917C6332C39C98B0041AEC9 /* StatisticsPreview.swift */; };
+		C917C6382C39F34A0041AEC9 /* ServicesPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917C6372C39F34A0041AEC9 /* ServicesPreview.swift */; };
+		C917C63A2C39FC670041AEC9 /* Emergency Alert History.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917C6392C39FC670041AEC9 /* Emergency Alert History.swift */; };
 		C98A16382C39105900D461E8 /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98A16372C39105900D461E8 /* iOSApp.swift */; };
 		C98A163A2C39105900D461E8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98A16392C39105900D461E8 /* ContentView.swift */; };
 		C98A163C2C39105B00D461E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C98A163B2C39105B00D461E8 /* Assets.xcassets */; };
@@ -39,6 +43,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C917C62F2C39AB5A0041AEC9 /* PlaybackPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackPreview.swift; sourceTree = "<group>"; };
+		C917C6332C39C98B0041AEC9 /* StatisticsPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsPreview.swift; sourceTree = "<group>"; };
+		C917C6372C39F34A0041AEC9 /* ServicesPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesPreview.swift; sourceTree = "<group>"; };
+		C917C6392C39FC670041AEC9 /* Emergency Alert History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Emergency Alert History.swift"; sourceTree = "<group>"; };
 		C98A16342C39105900D461E8 /* iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C98A16372C39105900D461E8 /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		C98A16392C39105900D461E8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -81,6 +89,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C917C62E2C39AB420041AEC9 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				C917C6362C39F32B0041AEC9 /* Previews */,
+				C98A166D2C3924EB00D461E8 /* AddSensePopup.swift */,
+				C98A166B2C391F2400D461E8 /* HomeNotification.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		C917C6362C39F32B0041AEC9 /* Previews */ = {
+			isa = PBXGroup;
+			children = (
+				C917C62F2C39AB5A0041AEC9 /* PlaybackPreview.swift */,
+				C917C6332C39C98B0041AEC9 /* StatisticsPreview.swift */,
+				C917C6372C39F34A0041AEC9 /* ServicesPreview.swift */,
+				C917C6392C39FC670041AEC9 /* Emergency Alert History.swift */,
+			);
+			path = Previews;
+			sourceTree = "<group>";
+		};
 		C98A162B2C39105900D461E8 = {
 			isa = PBXGroup;
 			children = (
@@ -168,8 +197,7 @@
 		C98A166A2C391EAB00D461E8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				C98A166B2C391F2400D461E8 /* HomeNotification.swift */,
-				C98A166D2C3924EB00D461E8 /* AddSensePopup.swift */,
+				C917C62E2C39AB420041AEC9 /* Home */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -305,9 +333,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				C98A16672C3912B100D461E8 /* Automation.swift in Sources */,
+				C917C6342C39C98B0041AEC9 /* StatisticsPreview.swift in Sources */,
+				C917C6382C39F34A0041AEC9 /* ServicesPreview.swift in Sources */,
+				C917C6302C39AB5A0041AEC9 /* PlaybackPreview.swift in Sources */,
 				C98A166E2C3924EB00D461E8 /* AddSensePopup.swift in Sources */,
 				C98A163A2C39105900D461E8 /* ContentView.swift in Sources */,
 				C98A16652C3912A600D461E8 /* Home.swift in Sources */,
+				C917C63A2C39FC670041AEC9 /* Emergency Alert History.swift in Sources */,
 				C98A166C2C391F2400D461E8 /* HomeNotification.swift in Sources */,
 				C98A16382C39105900D461E8 /* iOSApp.swift in Sources */,
 				C98A16692C3912BB00D461E8 /* Settings.swift in Sources */,
