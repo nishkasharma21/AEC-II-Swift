@@ -11,6 +11,12 @@
 		C917C6342C39C98B0041AEC9 /* StatisticsPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917C6332C39C98B0041AEC9 /* StatisticsPreview.swift */; };
 		C917C6382C39F34A0041AEC9 /* ServicesPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917C6372C39F34A0041AEC9 /* ServicesPreview.swift */; };
 		C917C63A2C39FC670041AEC9 /* Emergency Alert History.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917C6392C39FC670041AEC9 /* Emergency Alert History.swift */; };
+		C917C63D2C3A1EB20041AEC9 /* PlaybackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917C63C2C3A1EB20041AEC9 /* PlaybackView.swift */; };
+		C917C63F2C3A1F080041AEC9 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917C63E2C3A1F080041AEC9 /* StatisticsView.swift */; };
+		C917C6412C3A1F270041AEC9 /* EmergencyAlertHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917C6402C3A1F270041AEC9 /* EmergencyAlertHistoryView.swift */; };
+		C917C6432C3A1F340041AEC9 /* ServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917C6422C3A1F340041AEC9 /* ServicesView.swift */; };
+		C917C6452C3A22B00041AEC9 /* PlaybackVideos.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917C6442C3A22B00041AEC9 /* PlaybackVideos.swift */; };
+		C917C6472C3A2B2F0041AEC9 /* PlaybackVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917C6462C3A2B2F0041AEC9 /* PlaybackVideo.swift */; };
 		C98A16382C39105900D461E8 /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98A16372C39105900D461E8 /* iOSApp.swift */; };
 		C98A163A2C39105900D461E8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98A16392C39105900D461E8 /* ContentView.swift */; };
 		C98A163C2C39105B00D461E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C98A163B2C39105B00D461E8 /* Assets.xcassets */; };
@@ -47,6 +53,12 @@
 		C917C6332C39C98B0041AEC9 /* StatisticsPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsPreview.swift; sourceTree = "<group>"; };
 		C917C6372C39F34A0041AEC9 /* ServicesPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesPreview.swift; sourceTree = "<group>"; };
 		C917C6392C39FC670041AEC9 /* Emergency Alert History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Emergency Alert History.swift"; sourceTree = "<group>"; };
+		C917C63C2C3A1EB20041AEC9 /* PlaybackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackView.swift; sourceTree = "<group>"; };
+		C917C63E2C3A1F080041AEC9 /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
+		C917C6402C3A1F270041AEC9 /* EmergencyAlertHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyAlertHistoryView.swift; sourceTree = "<group>"; };
+		C917C6422C3A1F340041AEC9 /* ServicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesView.swift; sourceTree = "<group>"; };
+		C917C6442C3A22B00041AEC9 /* PlaybackVideos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackVideos.swift; sourceTree = "<group>"; };
+		C917C6462C3A2B2F0041AEC9 /* PlaybackVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackVideo.swift; sourceTree = "<group>"; };
 		C98A16342C39105900D461E8 /* iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C98A16372C39105900D461E8 /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		C98A16392C39105900D461E8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -95,6 +107,7 @@
 				C917C6362C39F32B0041AEC9 /* Previews */,
 				C98A166D2C3924EB00D461E8 /* AddSensePopup.swift */,
 				C98A166B2C391F2400D461E8 /* HomeNotification.swift */,
+				C917C6442C3A22B00041AEC9 /* PlaybackVideos.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -108,6 +121,17 @@
 				C917C6392C39FC670041AEC9 /* Emergency Alert History.swift */,
 			);
 			path = Previews;
+			sourceTree = "<group>";
+		};
+		C917C63B2C3A1E960041AEC9 /* Home Component Expansions */ = {
+			isa = PBXGroup;
+			children = (
+				C917C63C2C3A1EB20041AEC9 /* PlaybackView.swift */,
+				C917C63E2C3A1F080041AEC9 /* StatisticsView.swift */,
+				C917C6402C3A1F270041AEC9 /* EmergencyAlertHistoryView.swift */,
+				C917C6422C3A1F340041AEC9 /* ServicesView.swift */,
+			);
+			path = "Home Component Expansions";
 			sourceTree = "<group>";
 		};
 		C98A162B2C39105900D461E8 = {
@@ -172,6 +196,7 @@
 		C98A16612C39106600D461E8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				C917C6462C3A2B2F0041AEC9 /* PlaybackVideo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -186,6 +211,7 @@
 		C98A16632C39107C00D461E8 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C917C63B2C3A1E960041AEC9 /* Home Component Expansions */,
 				C98A166A2C391EAB00D461E8 /* Components */,
 				C98A16642C3912A600D461E8 /* Home.swift */,
 				C98A16662C3912B100D461E8 /* Automation.swift */,
@@ -332,13 +358,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C917C6452C3A22B00041AEC9 /* PlaybackVideos.swift in Sources */,
 				C98A16672C3912B100D461E8 /* Automation.swift in Sources */,
 				C917C6342C39C98B0041AEC9 /* StatisticsPreview.swift in Sources */,
 				C917C6382C39F34A0041AEC9 /* ServicesPreview.swift in Sources */,
 				C917C6302C39AB5A0041AEC9 /* PlaybackPreview.swift in Sources */,
 				C98A166E2C3924EB00D461E8 /* AddSensePopup.swift in Sources */,
+				C917C6432C3A1F340041AEC9 /* ServicesView.swift in Sources */,
+				C917C63F2C3A1F080041AEC9 /* StatisticsView.swift in Sources */,
+				C917C6472C3A2B2F0041AEC9 /* PlaybackVideo.swift in Sources */,
+				C917C6412C3A1F270041AEC9 /* EmergencyAlertHistoryView.swift in Sources */,
 				C98A163A2C39105900D461E8 /* ContentView.swift in Sources */,
 				C98A16652C3912A600D461E8 /* Home.swift in Sources */,
+				C917C63D2C3A1EB20041AEC9 /* PlaybackView.swift in Sources */,
 				C917C63A2C39FC670041AEC9 /* Emergency Alert History.swift in Sources */,
 				C98A166C2C391F2400D461E8 /* HomeNotification.swift in Sources */,
 				C98A16382C39105900D461E8 /* iOSApp.swift in Sources */,

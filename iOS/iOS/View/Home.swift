@@ -34,14 +34,20 @@ struct Home: View {
                     
                     ScrollView(.horizontal) {
                         LazyHStack {
-                            PlaybackPreview()
-                            StatisticsPreview()
-                            ServicesPreview()
-                            EmergencyAlertHistoryPreview()
+                            NavigationLink(destination: PlaybackView()) {
+                                PlaybackPreview()
+                            }
+                            NavigationLink(destination: StatisticsView()) {
+                                StatisticsPreview()
+                            }
+                            NavigationLink(destination: ServicesView()) {
+                                ServicesPreview()
+                            }
+                            NavigationLink(destination: EmergencyAlertHistoryView()) {
+                                EmergencyAlertHistoryPreview()
+                            }
                         }
                     }
-                    .scrollIndicators(.hidden)
-                    
                 }
                 .padding()
                 .navigationTitle("1732 Lyons Ave")
