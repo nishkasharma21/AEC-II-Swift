@@ -16,13 +16,13 @@ struct ServicesPreview: View {
             .frame(alignment: .leading)
             HStack{
                 VStack{
-                    VStack{
+                    VStack (alignment: .leading){
                         HStack{
                             Text("Theft Detection").font(.system(size: 13)).bold()
-                                .frame(alignment:.leading)
+                                .frame(alignment: .leading)
                             Spacer()
                         }
-                        .padding(.leading)
+                        .padding( .leading)
                         HStack{
                             Text("Free").font(.system(size: 11)).fontWeight(.medium)
                             Spacer()

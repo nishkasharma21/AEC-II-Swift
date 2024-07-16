@@ -9,16 +9,30 @@ struct PlaybackView: View {
     ]
     
     var body: some View {
-        NavigationView{
-            ScrollView(.vertical, showsIndicators: false) {
-                VStack {
-                    ForEach(playbackVideos) { playbackVideo in
-                        PlaybackVideos(playbackVideo: playbackVideo)
-                    }
+        ScrollView(.vertical, showsIndicators: false) {
+            HStack{
+                HStack(alignment: .center){
+                    Image(systemName: "video.fill")
+                       .font(.system(size:25))
+                       .overlay(
+                            LinearGradient(gradient: Gradient(colors: [Color("Purple Dark"),Color("Purple Light")]), startPoint:.leading, endPoint:.trailing)
+                                .mask(Image(systemName: "video.fill")).font(.system(size:25))
+                       ).padding()
+                    Text("Playback").font(.largeTitle).fontWeight(.bold)
+                }
+                .padding(.top, -40)
+                Spacer()
+            }
+            VStack {
+                ForEach(playbackVideos) { playbackVideo in
+                    PlaybackVideos(playbackVideo: playbackVideo)
                 }
             }
-            .navigationTitle("Playback")
         }
         
     }
+}
+
+#Preview {
+    PlaybackView()
 }

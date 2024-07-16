@@ -33,14 +33,14 @@ struct Home: View {
                     
                     
                     ScrollView(.horizontal) {
-                        LazyHStack {
+                        LazyHStack{
                             NavigationLink(destination: PlaybackView()) {
                                 PlaybackPreview()
                             }
                             NavigationLink(destination: StatisticsView()) {
                                 StatisticsPreview()
                             }
-                            NavigationLink(destination: ServicesView()) {
+                            NavigationLink(destination: ServicesView()                ) {
                                 ServicesPreview()
                             }
                             NavigationLink(destination: EmergencyAlertHistoryView()) {

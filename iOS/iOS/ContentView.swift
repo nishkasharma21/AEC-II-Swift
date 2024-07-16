@@ -1,6 +1,9 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    let high: Int = 12
+    
     var body: some View {
         TabView {
             Home()
@@ -8,6 +11,7 @@ struct ContentView: View {
                     Image(systemName: "house.fill")
                     Text("Home")
                 }
+
                 .tag(0)
             Automation()
                 .tabItem {
@@ -23,6 +27,7 @@ struct ContentView: View {
                 .tag(2)
         }
         .accentColor(.black)
+        
     }
 }
 
