@@ -8,14 +8,64 @@ struct StatisticsView: View {
     @State private var currentTime = Date()
     @State private var timer: Timer?
     
-    let columns: [GridItem] = Array(repeating: .init(.flexible()), count: 6)
+    let columns: [GridItem] = Array(repeating: .init(.flexible()), count: 5)
+    
     
     var body: some View {
         VStack {
-            if viewModel.isLoading {
-                ProgressView("Loading...")
-            } else if let aqi = viewModel.aqi, let temperature = viewModel.temperature, let tvoc = viewModel.tvoc, let co = viewModel.co, let humidity = viewModel.humidity, let pressure = viewModel.pressure {
+            if let aqi = viewModel.aqi, let temperature = viewModel.temperature, let tvoc = viewModel.tvoc, let co = viewModel.co, let humidity = viewModel.humidity, let pressure = viewModel.pressure {
                 
+                var aqiCategory: String {
+                    switch aqi {
+                    case 0...50:
+                        return "Good"
+                    case 51...100:
+                        return "Moderate"
+                    case 101...150:
+                        return "Unhealthy for Sensitive Groups"
+                    case 151...200:
+                        return "Unhealthy"
+                    case 201...300:
+                        return "Very Unhealthy"
+                    case 301...500:
+                        return "Hazardous"
+                    default:
+                        return "Unknown"
+                    }
+                }
+                
+                var tvocCategory: String {
+                    switch tvoc {
+                    case 0...300:
+                        return "Good"
+                    case 301...500:
+                        return "Moderate"
+                    case 501...1000:
+                        return "Unhealthy for Sensitive Groups"
+                    case 1001...3000:
+                        return "Unhealthy"
+                    case 3001...5000:
+                        return "Very Unhealthy"
+                    case 5001...:
+                        return "Hazardous"
+                    default:
+                        return "Unknown"
+                    }
+                }
+                
+                var humidityCategory: String {
+                    switch humidity {
+                    case ..<30:
+                        return "Low"
+                    case 30...60:
+                        return "Normal"
+                    case 61...:
+                        return "High"
+                    default:
+                        return "Unknown"
+                    }
+                }
+            
                 VStack{
                     
                     VStack {
@@ -32,11 +82,11 @@ struct StatisticsView: View {
                             }.font(.system(size: 14))
                                 .foregroundColor(Color("Gray Text Color")).padding(.top).padding(.leading)
                             
-                            Text(String(aqi))
+                            Text(String(format: "%.1f", aqi))
                                 .font(.largeTitle)
                                 .fontWeight(.bold)
                                 .padding(.leading)
-                            Text("Moderate")
+                            Text(aqiCategory)
                                 .font(.title3)
                                 .fontWeight(.bold)
                                 .padding(.leading)
@@ -88,11 +138,11 @@ struct StatisticsView: View {
                             }
                             .foregroundColor(Color("Gray Text Color")).padding(.top).padding(.leading)
                             
-                            Text(String(pressure))
+                            Text(String(format: "%.1f", tvoc))
                                 .font(.largeTitle)
                                 .fontWeight(.bold)
                                 .padding(.leading)
-                            Text("Moderate")
+                            Text(tvocCategory)
                                 .font(.title3)
                                 .fontWeight(.bold)
                                 .padding(.leading)
@@ -128,11 +178,11 @@ struct StatisticsView: View {
                             }
                             .foregroundColor(Color("Gray Text Color")).padding(.top).padding(.leading)
                             
-                            Text(String(humidity))
+                            Text(String(format: "%.1f", humidity))
                                 .font(.largeTitle)
                                 .fontWeight(.bold)
                                 .padding(.leading)
-                            Text("Moderate")
+                            Text(humidityCategory)
                                 .font(.title3)
                                 .fontWeight(.bold)
                                 .padding(.leading)
@@ -159,21 +209,27 @@ struct StatisticsView: View {
                         }
 
                         Image("Carbon Monoxide")
-                        ForEach(timeData(), id: \.self) { data in
-                            Text(data)
-                        }
+                        Text("35")
+                        Text("35")
+                        Text("35")
+                        Text(String(format: "%.1f", co))
 
                         Image("Temperature")
-                        ForEach(timeData(), id: \.self) { data in
-                            Text(data)
-                        }
+                        Text("35")
+                        Text("35")
+                        Text("35")
+                        Text(String(format: "%.1f", temperature))
 
                         Image("Pressure")
-                        ForEach(timeData(), id: \.self) { data in
-                            Text(data)
-                        }
+                        Text("35")
+                        Text("35")
+                        Text("35")
+                        Text(String(format: "%.1f", pressure))
                     }
                     .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color("TabViewColor")))
                     .onAppear {
                         updateTimer()
                     }
@@ -202,8 +258,8 @@ struct StatisticsView: View {
     func timeLabels() -> [String] {
         let calendar = Calendar.current
         var labels = [String]()
-        for hourOffset in (-5...0).reversed() {
-            let date = calendar.date(byAdding: .hour, value: hourOffset, to: currentTime)!
+        for hourOffset in (0...3).reversed() {
+            let date = calendar.date(byAdding: .hour, value: -hourOffset, to: currentTime)!
             let formatter = DateFormatter()
             formatter.dateFormat = hourOffset == 0 ? "'Now'" : "ha"
             labels.append(formatter.string(from: date))
@@ -211,14 +267,10 @@ struct StatisticsView: View {
         return labels
     }
 
-    func timeData() -> [String] {
-        // Replace this with actual data fetching logic
-        return Array(repeating: "35", count: 6)
-    }
-
     func updateTimer() {
-        timer = Timer.scheduledTimer(withTimeInterval: 3600, repeats: true) { _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
             currentTime = Date()
+            viewModel.fetchEnvironmentalData()
         }
     }
     

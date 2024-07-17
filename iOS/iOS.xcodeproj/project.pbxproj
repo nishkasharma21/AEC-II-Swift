@@ -21,6 +21,9 @@
 		C917C64E2C3B4A5F0041AEC9 /* PurchaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917C64D2C3B4A5F0041AEC9 /* PurchaseService.swift */; };
 		C917C6862C3F2F0F0041AEC9 /* EnvironmentSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917C6852C3F2F0F0041AEC9 /* EnvironmentSensor.swift */; };
 		C917C6882C3F46AF0041AEC9 /* EnvironmentSensorVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917C6872C3F46AF0041AEC9 /* EnvironmentSensorVM.swift */; };
+		C917C6902C46E11E0041AEC9 /* SensorData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C917C68E2C46E11E0041AEC9 /* SensorData.xcdatamodeld */; };
+		C917C6922C46EF440041AEC9 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C917C6912C46EF440041AEC9 /* DataManager.swift */; };
+		C94F36F72C47AA1100F98E1A /* AccessoryKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94F36F62C47AA1100F98E1A /* AccessoryKit.swift */; };
 		C98A16382C39105900D461E8 /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98A16372C39105900D461E8 /* iOSApp.swift */; };
 		C98A163A2C39105900D461E8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98A16392C39105900D461E8 /* ContentView.swift */; };
 		C98A163C2C39105B00D461E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C98A163B2C39105B00D461E8 /* Assets.xcassets */; };
@@ -67,6 +70,9 @@
 		C917C64D2C3B4A5F0041AEC9 /* PurchaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseService.swift; sourceTree = "<group>"; };
 		C917C6852C3F2F0F0041AEC9 /* EnvironmentSensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentSensor.swift; sourceTree = "<group>"; };
 		C917C6872C3F46AF0041AEC9 /* EnvironmentSensorVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentSensorVM.swift; sourceTree = "<group>"; };
+		C917C68F2C46E11E0041AEC9 /* SensorData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SensorData.xcdatamodel; sourceTree = "<group>"; };
+		C917C6912C46EF440041AEC9 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		C94F36F62C47AA1100F98E1A /* AccessoryKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryKit.swift; sourceTree = "<group>"; };
 		C98A16342C39105900D461E8 /* iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C98A16372C39105900D461E8 /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		C98A16392C39105900D461E8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -172,6 +178,7 @@
 				C98A16612C39106600D461E8 /* Model */,
 				C98A163B2C39105B00D461E8 /* Assets.xcassets */,
 				C98A163D2C39105B00D461E8 /* Preview Content */,
+				C94F36F62C47AA1100F98E1A /* AccessoryKit.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -206,6 +213,8 @@
 			children = (
 				C917C6462C3A2B2F0041AEC9 /* PlaybackVideo.swift */,
 				C917C6852C3F2F0F0041AEC9 /* EnvironmentSensor.swift */,
+				C917C68E2C46E11E0041AEC9 /* SensorData.xcdatamodeld */,
+				C917C6912C46EF440041AEC9 /* DataManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -371,10 +380,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				C917C6452C3A22B00041AEC9 /* PlaybackVideos.swift in Sources */,
+				C94F36F72C47AA1100F98E1A /* AccessoryKit.swift in Sources */,
 				C917C6862C3F2F0F0041AEC9 /* EnvironmentSensor.swift in Sources */,
 				C98A16672C3912B100D461E8 /* Automation.swift in Sources */,
 				C917C6342C39C98B0041AEC9 /* StatisticsPreview.swift in Sources */,
 				C917C6382C39F34A0041AEC9 /* ServicesPreview.swift in Sources */,
+				C917C6922C46EF440041AEC9 /* DataManager.swift in Sources */,
 				C917C6302C39AB5A0041AEC9 /* PlaybackPreview.swift in Sources */,
 				C98A166E2C3924EB00D461E8 /* AddSensePopup.swift in Sources */,
 				C917C6432C3A1F340041AEC9 /* ServicesView.swift in Sources */,
@@ -385,6 +396,7 @@
 				C98A163A2C39105900D461E8 /* ContentView.swift in Sources */,
 				C98A16652C3912A600D461E8 /* Home.swift in Sources */,
 				C917C6882C3F46AF0041AEC9 /* EnvironmentSensorVM.swift in Sources */,
+				C917C6902C46E11E0041AEC9 /* SensorData.xcdatamodeld in Sources */,
 				C917C63D2C3A1EB20041AEC9 /* PlaybackView.swift in Sources */,
 				C917C63A2C39FC670041AEC9 /* Emergency Alert History.swift in Sources */,
 				C917C64C2C3B22DF0041AEC9 /* ServicesButton.swift in Sources */,
@@ -714,6 +726,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		C917C68E2C46E11E0041AEC9 /* SensorData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				C917C68F2C46E11E0041AEC9 /* SensorData.xcdatamodel */,
+			);
+			currentVersion = C917C68F2C46E11E0041AEC9 /* SensorData.xcdatamodel */;
+			path = SensorData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = C98A162C2C39105900D461E8 /* Project object */;
 }
