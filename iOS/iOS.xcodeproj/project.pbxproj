@@ -36,6 +36,8 @@
 		C98A16692C3912BB00D461E8 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98A16682C3912BB00D461E8 /* Settings.swift */; };
 		C98A166C2C391F2400D461E8 /* HomeNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98A166B2C391F2400D461E8 /* HomeNotification.swift */; };
 		C98A166E2C3924EB00D461E8 /* AddSensePopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98A166D2C3924EB00D461E8 /* AddSensePopup.swift */; };
+		C9FD4E852C48C8FD0095939C /* FilterHomeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FD4E842C48C8FD0095939C /* FilterHomeButton.swift */; };
+		C9FD4E872C497AE30095939C /* PaymentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FD4E862C497AE30095939C /* PaymentButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +90,8 @@
 		C98A16682C3912BB00D461E8 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		C98A166B2C391F2400D461E8 /* HomeNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNotification.swift; sourceTree = "<group>"; };
 		C98A166D2C3924EB00D461E8 /* AddSensePopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSensePopup.swift; sourceTree = "<group>"; };
+		C9FD4E842C48C8FD0095939C /* FilterHomeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterHomeButton.swift; sourceTree = "<group>"; };
+		C9FD4E862C497AE30095939C /* PaymentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +148,7 @@
 				C917C63E2C3A1F080041AEC9 /* StatisticsView.swift */,
 				C917C6402C3A1F270041AEC9 /* EmergencyAlertHistoryView.swift */,
 				C917C6422C3A1F340041AEC9 /* ServicesView.swift */,
+				C9FD4E842C48C8FD0095939C /* FilterHomeButton.swift */,
 			);
 			path = "Home Component Expansions";
 			sourceTree = "<group>";
@@ -245,6 +250,7 @@
 				C917C62E2C39AB420041AEC9 /* Home */,
 				C917C64B2C3B22DF0041AEC9 /* ServicesButton.swift */,
 				C917C64D2C3B4A5F0041AEC9 /* PurchaseService.swift */,
+				C9FD4E862C497AE30095939C /* PaymentButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -384,8 +390,10 @@
 				C917C6862C3F2F0F0041AEC9 /* EnvironmentSensor.swift in Sources */,
 				C98A16672C3912B100D461E8 /* Automation.swift in Sources */,
 				C917C6342C39C98B0041AEC9 /* StatisticsPreview.swift in Sources */,
+				C9FD4E852C48C8FD0095939C /* FilterHomeButton.swift in Sources */,
 				C917C6382C39F34A0041AEC9 /* ServicesPreview.swift in Sources */,
 				C917C6922C46EF440041AEC9 /* DataManager.swift in Sources */,
+				C9FD4E872C497AE30095939C /* PaymentButton.swift in Sources */,
 				C917C6302C39AB5A0041AEC9 /* PlaybackPreview.swift in Sources */,
 				C98A166E2C3924EB00D461E8 /* AddSensePopup.swift in Sources */,
 				C917C6432C3A1F340041AEC9 /* ServicesView.swift in Sources */,
