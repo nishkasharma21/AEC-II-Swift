@@ -28,3 +28,5 @@ struct EnvironmentalData: Codable {
     let pressure: Double
     // Add other properties as needed
 }
+
+

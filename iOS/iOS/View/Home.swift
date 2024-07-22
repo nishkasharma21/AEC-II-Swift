@@ -56,14 +56,6 @@ struct Home: View {
                 Spacer()
             }.padding(.leading)
             
-            ScrollView(.horizontal, showsIndicators: false){
-                HStack{
-                    FilterHomeButton(symbol: "exclamationmark.shield.fill", text: "Gun", color: Color("GunDetection"))
-                    FilterHomeButton(symbol: "flame.fill", text: "Fire", color: Color("FireIcon"))
-                    FilterHomeButton(symbol: "paintbrush.fill", text: "Vandalism", color: Color("VandalismIcon"))
-                    FilterHomeButton(symbol: "door.left.hand.open", text: "Open Door", color: Color("OpenDoorIcon"))
-                }
-            }.padding(.leading)
             
             VStack{
 //                    VStack {
@@ -82,7 +74,9 @@ struct Home: View {
 //                    .background(Color("TabViewColor"))
 //                    .clipShape(RoundedRectangle(cornerRadius: 10))
                 
-                WebView(url: URL(string: "http://172.20.10.2:8000/video_feed")!).edgesIgnoringSafeArea(.all)
+//                WebView(url: URL(string: "http://172.20.10.2:8000/video_feed")!).edgesIgnoringSafeArea(.all)
+                
+                
                 
                 HStack{
                     
@@ -102,6 +96,10 @@ struct Home: View {
                     
                 }.padding().background(Color("TabViewColor")).clipShape(RoundedRectangle(cornerRadius: 10)).padding(.horizontal)
                 
+                VideoStreamView(url: URL(string: "http://localhost:8000/video_feed")!)
+                                .aspectRatio(contentMode: .fit)
+                                .padding()
+                
                 HStack{
                     Text("Playback")
                         .fontWeight(.bold).font(.system(size: 20))
@@ -114,6 +112,15 @@ struct Home: View {
                         Image(systemName: "line.3.horizontal.decrease.circle").font(.system(size: 20))
                     })
                 }.padding()
+                
+                ScrollView(.horizontal, showsIndicators: false){
+                    HStack{
+                        FilterHomeButton(symbol: "exclamationmark.shield.fill", text: "Gun", color: Color("GunDetection"))
+                        FilterHomeButton(symbol: "flame.fill", text: "Fire", color: Color("FireIcon"))
+                        FilterHomeButton(symbol: "paintbrush.fill", text: "Vandalism", color: Color("VandalismIcon"))
+                        FilterHomeButton(symbol: "door.left.hand.open", text: "Open Door", color: Color("OpenDoorIcon"))
+                    }
+                }.padding(.leading)
                 
                 VStack {
                     ForEach(playbackVideos) { playbackVideo in
