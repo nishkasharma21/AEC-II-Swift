@@ -3,8 +3,8 @@ import CoreData
 import SwiftUI
 
 class EnvironmentalDataService {
-//    let baseURL = "http://172.20.10.2:8000"
-    let baseURL = "http://localhost:8000"
+    let baseURL = "http://172.20.10.2:8000"
+    //let baseURL = "http://localhost:8000"
     let sensorEndpoint = "/get_environmental-data"
 
     func fetchEnvironmentalData(completion: @escaping (Result<EnvironmentalData, Error>) -> Void) {

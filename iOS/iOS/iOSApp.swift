@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 @main
 struct iOSApp: App {
@@ -15,3 +16,4 @@ struct iOSApp: App {
         }
     }
 }
+

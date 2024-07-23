@@ -166,7 +166,7 @@ let languages = ["English", "Spanish", "French", "German", "Italian"]
                 }.padding()
                 
                 VStack(alignment: .leading){
-                    Text("Devices").multilineTextAlignment(.leading).bold()
+                    Text("Roomates").multilineTextAlignment(.leading).bold()
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
                             ForEach(devices, id: \.self) { device in

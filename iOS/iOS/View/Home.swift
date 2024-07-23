@@ -1,25 +1,15 @@
 import SwiftUI
 import WebKit
 
-struct WebView: UIViewRepresentable {
-    let url: URL
-
-    func makeUIView(context: Context) -> WKWebView {
-        let webView = WKWebView()
-        let request = URLRequest(url: url)
-        webView.load(request)
-        return webView
-    }
-
-    func updateUIView(_ uiView: WKWebView, context: Context) {}
-}
-
 struct Home: View {
+    @StateObject private var audioPlayer = AudioPlayer()
+    
     @State private var showAddSense = false
     @State private var homeNotificationBaseColorBlue = "HomeNotificationBaseBlue"
     @State private var homeNotificationLineColorBlue = "HomeNotificationLineAndTextBlue"
     @State private var homeNotificationBaseColorRed = "HomeNotificationBaseRed"
     @State private var homeNotificationLineColorRed = "HomeNotificationLineAndTextRed"
+
     
     let playbackVideos: [PlaybackVideo] = [
         PlaybackVideo(title: "Nishka Sharma unlocked door", timeAndDate: "Today at 8:29 AM", type: "Unlocked Door"),
@@ -34,6 +24,10 @@ struct Home: View {
             
             HStack{
                 Spacer()
+                    .onAppear {
+                        let launch = LaunchViewModel()
+                        launch.scheduleTimeBasedNotification()
+                    }
                 
                 
                 Button(action: {
@@ -79,7 +73,6 @@ struct Home: View {
                 
                 
                 HStack{
-                    
                     Image(systemName: "battery.25percent").padding().foregroundColor(.white)
                         .background(
                         Circle()
@@ -96,9 +89,12 @@ struct Home: View {
                     
                 }.padding().background(Color("TabViewColor")).clipShape(RoundedRectangle(cornerRadius: 10)).padding(.horizontal)
                 
-                VideoStreamView(url: URL(string: "http://localhost:8000/video_feed")!)
-                                .aspectRatio(contentMode: .fit)
+                CustomWebView(url: URL(string: "http://172.20.10.2:8000/video_feed")!)
+                                .frame(height: 200)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
                                 .padding()
+                
+               
                 
                 HStack{
                     Text("Playback")
@@ -145,6 +141,8 @@ struct Home: View {
 //                        }
 //                    }
             }
+        }.onAppear {
+            audioPlayer.startStreaming()
         }
     }
 }
