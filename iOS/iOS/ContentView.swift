@@ -13,20 +13,20 @@ struct ContentView: View {
                 }
 
                 .tag(0)
-            Automation()
+            StatisticsView()
                 .tabItem {
-                    Image(systemName: "clock.fill")
-                    Text("Automation")
+                    Image(systemName: "chart.bar.fill")
+                    Text("Statistics")
                 }
                 .tag(1)
-            Setting()
+            ServicesView()
                 .tabItem {
-                    Image(systemName: "gearshape.fill")
-                    Text("Settings")
+                    Image(systemName: "star.fill")
+                    Text("Discover")
                 }
                 .tag(2)
         }
-        .accentColor(.black)
+        .accentColor(.white)
         
     }
 }

@@ -3,8 +3,8 @@ import SwiftUI
 struct PlaybackView: View {
     
     let playbackVideos: [PlaybackVideo] = [
-        PlaybackVideo(title: "Nishka Sharma unlocked door", timeAndDate: "Today at 8:29 AM", type: "Open Door"),
-        PlaybackVideo(title: "Nishka Sharma unlocked door", timeAndDate: "Today at 8:29 AM", type: "Fire"),
+        PlaybackVideo(title: "Nishka Sharma unlocked door", timeAndDate: "Today at 8:29 AM", type: "Unlocked Door"),
+        PlaybackVideo(title: "Fire", timeAndDate: "Today at 8:29 AM", type: "Fire"),
         PlaybackVideo(title: "Nishka Sharma unlocked door", timeAndDate: "Today at 8:29 AM", type: "Open Door")
     ]
     

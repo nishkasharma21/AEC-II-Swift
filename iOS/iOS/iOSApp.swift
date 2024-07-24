@@ -10,6 +10,13 @@ import UserNotifications
 
 @main
 struct iOSApp: App {
+    let launchViewModel: LaunchViewModel
+    @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
+    
+    init() {
+        self.launchViewModel = LaunchViewModel()
+        launchViewModel.scheduleTimeBasedNotification()
+    }
     var body: some Scene {
         WindowGroup {
             ContentView()

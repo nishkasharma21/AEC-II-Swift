@@ -14,52 +14,46 @@ struct PlaybackVideos: View {
                     
                     VStack(alignment: .leading) {
                         Text(playbackVideo.title).font(.system(size: 18).bold().weight(.semibold))
-                        Text(playbackVideo.timeAndDate).font(.system(size: 14))
+                        Text(playbackVideo.timeAndDate).font(.system(size: 18))
                     }
                     Spacer()
-                    Image(systemName: "ellipsis")
-                        .rotationEffect(Angle(degrees: 90))
+                    
+                    if (playbackVideo.type == "Fire" || playbackVideo.type == "Gun" || playbackVideo.type == "Vandalism"){
+                        Image("PlaybackPreview")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 100, height: 60)
+
+                    } else {
+                        Image("Arrow")
+                    }
                 }
                 .foregroundColor(textColor)
                 .padding()
                 .background(backgroundColor)
-                .clipShape(
-                    .rect(
-                        topLeadingRadius: 10,
-                        bottomLeadingRadius: 0,
-                        bottomTrailingRadius: 0,
-                        topTrailingRadius: 10
-                    )
-                )
+                .clipShape(RoundedRectangle(cornerRadius: 10))
             }
             .padding(.leading)
             .padding(.trailing)
             
-            
-            Image("PlaybackVideos")
-                .clipShape(
-                    .rect(
-                        topLeadingRadius: 0,
-                        bottomLeadingRadius: 10,
-                        bottomTrailingRadius: 10,
-                        topTrailingRadius: 0
-                    )
-                )
+
         }
     }
     private func getImageNameAndColor(for type: String) -> (String, Color, Color) {
         switch type {
         case "Unlocked Door":
-            return ("door.left.hand.open", Color("TabViewColor"), .black)
+            return ("door.left.hand.open", Color("TabViewColor"), .white)
         case "Fire":
-            return ("flame.fill", Color("FireIcon"), .white)
+            return ("flame.fill", Color("StandardIconColor"), .white)
         case "Gun":
-            return ("exclamationmark.shield.fill", Color("GunDetection"), .white)
+            return ("exclamationmark.shield.fill", Color("StandardIconColor"), .white)
         case "Vandalism":
-            return ("paintbrush.fill", Color("VandalismIcon"), .white)
+            return ("paintbrush.fill", Color("StandardIconColor"), .white)
         default:
-            return ("questionmark", Color("TabViewColor"), .black)
+            return ("questionmark", Color("TabViewColor"), .white)
         }
     }
 
 }
+
+

@@ -42,8 +42,7 @@ struct ServicesButton: View {
                 }
                 .padding()
             }
-            .frame(width: 328)
-            .padding()
+            .frame(width: 410)
             .background(Color("TabViewColor"))
             .clipShape(RoundedRectangle(cornerRadius: 15))
         }
