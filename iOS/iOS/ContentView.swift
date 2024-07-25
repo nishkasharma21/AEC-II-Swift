@@ -2,35 +2,41 @@ import SwiftUI
 
 struct ContentView: View {
     
-    let high: Int = 12
-    
+    @EnvironmentObject var authViewModel: AuthViewModel
+
     var body: some View {
-        TabView {
-            Home()
-                .tabItem {
-                    Image(systemName: "house.fill")
-                    Text("Home")
+        Group {
+            if authViewModel.isAuthenticated {
+                TabView {
+                    Home()
+                        .tabItem {
+                            Image(systemName: "house.fill")
+                            Text("Home")
+                        }
+                        .tag(0)
+                    StatisticsView()
+                        .tabItem {
+                            Image(systemName: "chart.bar.fill")
+                            Text("Statistics")
+                        }
+                        .tag(1)
+                    ServicesView()
+                        .tabItem {
+                            Image(systemName: "star.fill")
+                            Text("Discover")
+                        }
+                        .tag(2)
+                    GroupView()
+                        .tabItem {
+                            Image(systemName: "star.fill")
+                            Text("GroupView")
+                        }
+                        .tag(3)
                 }
-
-                .tag(0)
-            StatisticsView()
-                .tabItem {
-                    Image(systemName: "chart.bar.fill")
-                    Text("Statistics")
-                }
-                .tag(1)
-            ServicesView()
-                .tabItem {
-                    Image(systemName: "star.fill")
-                    Text("Discover")
-                }
-                .tag(2)
+                .accentColor(.white)
+            } else {
+                LogInView()
+            }
         }
-        .accentColor(.white)
-        
     }
-}
-
-#Preview {
-    ContentView()
 }

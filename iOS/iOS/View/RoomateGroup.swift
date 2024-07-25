@@ -1,215 +1,296 @@
 import SwiftUI
+import Combine
 
-struct GroupUserManagementView: View {
-    @State var groupId: Int // The ID of the group managed by the admin
-    @State var adminId: Int // The ID of the admin user
-    @State var users: [User] = [] // List of all users
-    @State var groupMembers: [User] = [] // List of users in the group
-    @State var emailToAdd: String = "" // Email of the user to be added
-    @State var errorMessage: String? = nil
-    @State var showAddUserFields: Bool = false // Control visibility of add user fields
+struct GroupView: View {
+    @State private var selectedGroupId: Int?
+    @State private var userEmail = ""
+    @State private var usersInGroup: [User] = []
+    @State private var allUsers: [User] = []
+    @State private var isLoading = false
+    @State private var alertMessage: AlertMessage?
+    
+    @State private var groupName: String = ""
+    @State private var responseMessage: String = ""
+    @State private var message: String = ""
 
+    @EnvironmentObject var authViewModel: AuthViewModel
+    
     var body: some View {
-        VStack {
-            Text("Manage Group")
-                .font(.largeTitle)
-                .padding()
-
-            List(groupMembers) { user in
-                HStack {
-                    Text(user.email)
-                    Spacer()
-                    Button(action: {
-                        removeUserFromGroup(user: user)
-                    }) {
-                        Text("Remove")
-                            .foregroundColor(.red)
-                    }
+        VStack{
+            VStack {
+                Text("Groups Management")
+                    .font(.largeTitle)
+                    .padding()
+                
+                // Create Group Section
+                TextField("Group Name", text: $groupName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                
+                Button("Create Group") {
+                    createGroup(groupName: groupName)
+                    print("called")
                 }
+                .padding()
+                .disabled(isLoading)
             }
             
-            if showAddUserFields {
-                VStack {
-                    TextField("Enter email to add", text: $emailToAdd)
-                        .textInputAutocapitalization(.none)
-                        .padding()
-                        .background(Color(UIColor.systemGray6))
-                        .cornerRadius(8)
-                        .padding(.bottom)
-                    
-                    Button(action: {
-                        addUserByEmail(email: emailToAdd)
-                    }) {
-                        Text("Add User")
-                            .frame(maxWidth: .infinity, minHeight: 44)
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                    }
-                    .padding()
+            // Add User to Group Section
+            TextField("User Email", text: $userEmail)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+            
+            Button("Add User to Group") {
+                if let groupId = selectedGroupId {
+                    addUserToGroup(groupId: groupId, userEmail: userEmail)
                 }
-            }
-
-            Button(action: {
-                showAddUserFields.toggle() // Toggle the visibility of the add user fields
-            }) {
-                Label("Add User", systemImage: "plus")
-                    .frame(maxWidth: .infinity, minHeight: 44)
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
             }
             .padding()
-            
-            if let errorMessage = errorMessage {
-                Text(errorMessage)
-                    .foregroundColor(.red)
-                    .padding()
-            }
+            .disabled(isLoading || userEmail.isEmpty)
         }
-        .onAppear {
-            fetchUsers()
-            fetchGroupMembers()
-        }
+//
+//            Button("Remove User from Group") {
+//                if let groupId = selectedGroupId {
+//                    removeUserFromGroup(groupId: groupId)
+//                }
+//            }
+//            .padding()
+//            .disabled(isLoading || userEmail.isEmpty)
+//            
+//            // List Users in Group
+//            if let groupId = selectedGroupId {
+//                List(usersInGroup) { user in
+//                    Text(user.email)
+//                }
+//            }
+//
+//            // List Available Groups
+//            VStack(alignment: .leading) {
+//                Text("Available Groups")
+//                    .font(.headline)
+//                    .padding()
+//                
+//                List(allUsers) { user in
+//                    Text(user.email)
+//                        .onTapGesture {
+//                            selectedGroupId = user.id
+//                            fetchUsersInGroup(groupId: user.id)
+//                        }
+//                }
+//            }
+//            .padding()
+//            
+//            Spacer()
+//        }
+//        .alert(item: $alertMessage) { message in
+//            Alert(title: Text(message.title), message: Text(message.message))
+//        }
+//        .onAppear(perform: loadGroups)
     }
+    
+    private func loadGroups() {
+        guard let userId = authViewModel.userId else { return }
 
-    private func fetchUsers() {
-        // Fetch all users from the server
-        let url = URL(string: "http://172.20.10.2:8000/users")!
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print("Error: \(error)")
-                return
-            }
+        isLoading = true
+        let url = URL(string: "http://172.20.10.2:8000/groups?user_id=\(userId)")!
 
-            guard let data = data else { return }
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            defer { DispatchQueue.main.async { self.isLoading = false } }
 
-            do {
-                let fetchedUsers = try JSONDecoder().decode([User].self, from: data)
-                DispatchQueue.main.async {
-                    self.users = fetchedUsers
-                }
-            } catch {
-                print("Error decoding users: \(error)")
-            }
-        }
-        task.resume()
-    }
-
-    private func fetchGroupMembers() {
-        // Fetch group members from the server
-        let url = URL(string: "http://172.20.10.2:8000/groups/\(groupId)/members")!
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print("Error: \(error)")
-                return
-            }
-
-            guard let data = data else { return }
-
-            do {
-                let fetchedMembers = try JSONDecoder().decode([User].self, from: data)
-                DispatchQueue.main.async {
-                    self.groupMembers = fetchedMembers
-                }
-            } catch {
-                print("Error decoding group members: \(error)")
-            }
-        }
-        task.resume()
-    }
-
-    private func addUserByEmail(email: String) {
-        // Find user by email
-        guard !email.isEmpty else {
-            self.errorMessage = "Email cannot be empty"
-            return
-        }
-        
-        guard let user = users.first(where: { $0.email.lowercased() == email.lowercased() }) else {
-            self.errorMessage = "User with this email does not exist"
-            return
-        }
-        
-        // Add user to the group
-        let url = URL(string: "http://172.20.10.2:8000/add_user_to_group")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        let body: [String: Any] = [
-            "admin_id": adminId,
-            "user_id": user.id,
-            "group_id": groupId
-        ]
-        request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
-
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 DispatchQueue.main.async {
-                    self.errorMessage = "Error: \(error.localizedDescription)"
+                    self.alertMessage = AlertMessage(title: "Error", message: "Error fetching groups: \(error.localizedDescription)")
                 }
                 return
             }
 
-            guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
+            guard let data = data,
+                  let users = try? JSONDecoder().decode([User].self, from: data) else {
                 DispatchQueue.main.async {
-                    self.errorMessage = "Failed to add user to group"
+                    self.alertMessage = AlertMessage(title: "Error", message: "Error decoding groups")
                 }
                 return
             }
 
             DispatchQueue.main.async {
-                self.fetchGroupMembers() // Refresh the list
-                self.emailToAdd = "" // Clear email field
-                self.showAddUserFields = false // Hide the fields after adding
+                self.allUsers = users
             }
-        }
-        task.resume()
+        }.resume()
     }
 
-    private func removeUserFromGroup(user: User) {
-        // Remove user from the group
+    private func createGroup(groupName: String) {
+        guard let url = URL(string: "http://172.20.10.2:8000/create_group") else {
+            print("Invalid URL")
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let json: [String: Any] = ["group_name": groupName]
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+
+        request.httpBody = jsonData
+
+        let session = URLSession.shared
+        session.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                print("Network error: \(String(describing: error))")
+                return
+            }
+
+            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                if let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                    DispatchQueue.main.async {
+                        message = responseJSON["message"] as? String ?? "Unknown response"
+                    }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    message = "Failed to create group"
+                }
+            }
+        }.resume()
+    }
+    private func addUserToGroup(groupId: Int, userEmail: String) {
+        guard let userId = authViewModel.userId else {
+            print("No userId found")
+            return
+        }
+        
+        isLoading = true
+        
+        guard let url = URL(string: "http://172.20.10.2:8000/add_user_to_group") else {
+            DispatchQueue.main.async {
+                self.alertMessage = AlertMessage(title: "Error", message: "Invalid URL")
+                self.isLoading = false
+            }
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let body: [String: Any] = ["group_id": groupId, "user_email": userEmail]
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: body, options: [])
+        } catch {
+            DispatchQueue.main.async {
+                self.alertMessage = AlertMessage(title: "Error", message: "Failed to encode request body: \(error.localizedDescription)")
+                self.isLoading = false
+            }
+            return
+        }
+        
+        print("Sending request to \(url) with body: \(body)")
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            DispatchQueue.main.async {
+                self.isLoading = false
+            }
+            
+            if let error = error {
+                DispatchQueue.main.async {
+                    self.alertMessage = AlertMessage(title: "Error", message: "Error adding user to group: \(error.localizedDescription)")
+                }
+                print("Error adding user to group: \(error.localizedDescription)")
+                return
+            }
+            
+            if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode == 200 {
+                    DispatchQueue.main.async {
+                        self.userEmail = ""
+                        self.fetchUsersInGroup(groupId: groupId)
+                    }
+                    print("User added to group successfully")
+                } else {
+                    DispatchQueue.main.async {
+                        self.alertMessage = AlertMessage(title: "Error", message: "Error adding user to group, status code: \(httpResponse.statusCode)")
+                    }
+                    print("Error adding user to group, status code: \(httpResponse.statusCode)")
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.alertMessage = AlertMessage(title: "Error", message: "No response from server")
+                }
+                print("No response from server")
+            }
+            
+        }.resume()
+    }
+
+    private func removeUserFromGroup(groupId: Int) {
+        guard let userId = authViewModel.userId else { return }
+        
+        isLoading = true
         let url = URL(string: "http://172.20.10.2:8000/remove_user_from_group")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        let body: [String: Any] = [
-            "admin_id": adminId,
-            "user_id": user.id,
-            "group_id": groupId
-        ]
+        let body: [String: Any] = ["group_id": groupId, "user_email": userEmail]
         request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
-
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            defer { isLoading = false }
+            
+            if let error = error {
+                alertMessage = AlertMessage(title: "Error", message: "Error removing user from group: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                alertMessage = AlertMessage(title: "Error", message: "Error removing user from group")
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.userEmail = ""
+                self.fetchUsersInGroup(groupId: groupId)
+            }
+        }.resume()
+    }
+    
+    private func fetchUsersInGroup(groupId: Int) {
+        let url = URL(string: "http://172.20.10.2:8000/group_users?id=\(groupId)")!
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
                 DispatchQueue.main.async {
-                    self.errorMessage = "Error: \(error.localizedDescription)"
+                    self.alertMessage = AlertMessage(title: "Error", message: "Error fetching users in group: \(error.localizedDescription)")
                 }
                 return
             }
-
-            guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
+            
+            guard let data = data,
+                  let users = try? JSONDecoder().decode([User].self, from: data) else {
                 DispatchQueue.main.async {
-                    self.errorMessage = "Failed to remove user from group"
+                    self.alertMessage = AlertMessage(title: "Error", message: "Error decoding users")
                 }
                 return
             }
-
+            
             DispatchQueue.main.async {
-                self.fetchGroupMembers() // Refresh the list
+                self.usersInGroup = users
             }
-        }
-        task.resume()
+        }.resume()
     }
 }
 
-struct User: Identifiable, Decodable {
+struct User: Identifiable, Codable {
     var id: Int
     var email: String
 }
 
-#Preview {
-    GroupUserManagementView(groupId: 1, adminId: 1) // Provide test values for preview
+struct AlertMessage: Identifiable {
+    var id = UUID()
+    var title: String
+    var message: String
+}
+
+
+#Preview{
+    GroupView()
 }

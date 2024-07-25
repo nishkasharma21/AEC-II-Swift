@@ -12,6 +12,7 @@ import UserNotifications
 struct iOSApp: App {
     let launchViewModel: LaunchViewModel
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
+    @StateObject private var authViewModel = AuthViewModel()
     
     init() {
         self.launchViewModel = LaunchViewModel()
@@ -19,7 +20,7 @@ struct iOSApp: App {
     }
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView().environmentObject(authViewModel)
         }
     }
 }

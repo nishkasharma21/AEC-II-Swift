@@ -27,7 +27,7 @@ struct LaunchViewModel {
 
         // 3. Set up a trigger for the notification
         // For example, 10 seconds from now
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: (10), repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: (1), repeats: false)
 
         // 4. Create the request
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)

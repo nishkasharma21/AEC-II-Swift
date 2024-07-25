@@ -6,6 +6,8 @@ struct LogInView: View {
     @State private var isLogInSuccessful: Bool = true
     @State private var isFullScreen = false
     @State private var isPasswordVisible: Bool = false
+    
+    @EnvironmentObject var authViewModel: AuthViewModel
 
     var body: some View {
         VStack {
@@ -33,16 +35,15 @@ struct LogInView: View {
                     if isPasswordVisible {
                         TextField("Password", text: $password)
                             .padding(.bottom)
-                        
                     } else {
                         SecureField("Password", text: $password)
                             .padding(.bottom)
                     }
-                    
+
                     Button(action: {
-                        isPasswordVisible.toggle() // Toggle password visibility
+                        isPasswordVisible.toggle()
                     }) {
-                        Image(systemName: isPasswordVisible ? "eye.fill" : "eye.slash.fill").foregroundColor(.black)
+                        Image(systemName: isPasswordVisible ? "eye.fill" : "eye.slash.fill").foregroundColor(.white)
                     }
                 }
                 .background(
@@ -54,20 +55,18 @@ struct LogInView: View {
                     }
                 )
                 .padding(.bottom)
-                
-                
+
                 Button {
                     // Handle forgot password
                 } label: {
                     Text("Forgot Password?")
                 }.padding(.bottom)
             }
-            
 
             Button(action: {
                 logIn()
             }) {
-                Text("Log In") // Changed from "Sign Up" to "Log In"
+                Text("Log In")
                     .frame(maxWidth: .infinity, minHeight: 44)
                     .background(Color.blue)
                     .foregroundColor(.white)
@@ -76,11 +75,11 @@ struct LogInView: View {
             .padding(.bottom)
 
             if !isLogInSuccessful {
-                Text("Email or password is incorrect") // Updated message for login
+                Text("Email or password is incorrect")
                     .foregroundColor(.red)
                     .padding()
-            } 
-            
+            }
+
             HStack {
                 Text("Don't have an account?")
                 Button {
@@ -95,7 +94,6 @@ struct LogInView: View {
             }
         }
         .padding()
-        .padding()
     }
 
     private func logIn() {
@@ -103,42 +101,12 @@ struct LogInView: View {
             isLogInSuccessful = false
             return
         }
-        
-        let url = URL(string: "http://172.20.10.2:8000/login")! // Updated URL for login
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        let body: [String: String] = ["email": email, "password": password]
-        request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
-        
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print("Error: \(error)")
-                DispatchQueue.main.async {
-                    isLogInSuccessful = false
-                }
-                return
-            }
-            
-            guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
-                DispatchQueue.main.async {
-                    isLogInSuccessful = false
-                }
-                return
-            }
-            
-            DispatchQueue.main.async {
-                isLogInSuccessful = true
-            }
+
+        authViewModel.logIn(email: email, password: password)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            isLogInSuccessful = authViewModel.isAuthenticated
         }
-        
-        task.resume()
     }
-
-}
-
-#Preview {
-    LogInView() // Updated to show LogInView
 }
 

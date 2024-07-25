@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct SignUpView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
+
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var isSignUpSuccessful: Bool = false
@@ -45,9 +47,9 @@ struct SignUpView: View {
                 }
 
                 Button(action: {
-                    isPasswordVisible.toggle() // Toggle password visibility
+                    isPasswordVisible.toggle()
                 }) {
-                    Image(systemName: isPasswordVisible ? "eye.fill" : "eye.slash.fill").foregroundColor(.black)
+                    Image(systemName: isPasswordVisible ? "eye.fill" : "eye.slash.fill").foregroundColor(.white)
                 }
             }
             .background(
@@ -92,70 +94,62 @@ struct SignUpView: View {
             }
         }
         .padding()
-        .padding()
     }
 
     private func signUp() {
-        // Reset error message before starting the sign-up attempt
         emailErrorMessage = nil
-        
+
         guard !email.isEmpty, !password.isEmpty else {
             isSignUpSuccessful = false
             emailErrorMessage = "Email and password are required"
             return
         }
-        
+
         guard isValidEmail(email) else {
             isSignUpSuccessful = false
             emailErrorMessage = "Invalid email format"
             return
         }
-        
+
         let url = URL(string: "http://172.20.10.2:8000/signup")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
+
         let body: [String: String] = ["email": email, "password": password]
         request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
-        
+
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 print("Error: \(error)")
                 DispatchQueue.main.async {
                     isSignUpSuccessful = false
-                    // Clear the error message on request error
                     emailErrorMessage = nil
                 }
                 return
             }
-            
+
             guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
                 DispatchQueue.main.async {
                     isSignUpSuccessful = false
-                    // Clear the error message on response error
                     emailErrorMessage = nil
                 }
                 return
             }
-            
+
             DispatchQueue.main.async {
                 isSignUpSuccessful = true
-                // Clear the error message on successful sign-up
+                authViewModel.isAuthenticated = true
                 emailErrorMessage = nil
             }
         }
-        
+
         task.resume()
     }
 
     private func isValidEmail(_ email: String) -> Bool {
         let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}"
-        let emailPredicate = NSPredicate(format:"SELF MATCHES %@", emailRegex)
+        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
         return emailPredicate.evaluate(with: email)
     }
-}
-
-#Preview {
-    SignUpView()
 }

@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct Setting: View {
-    
     @State private var phoneNumber = "510 371 2161"
     @State private var language = "English"
     @State private var isPhoneNumberEditable = false
@@ -14,9 +13,12 @@ struct Setting: View {
     @State private var devices = ["Philips Smart LED Bulb", "Smart Lock", "Philips Smart LED Bulb"]
     
     @State private var selectedLanguage = "English"
-let languages = ["English", "Spanish", "French", "German", "Italian"]
+    let languages = ["English", "Spanish", "French", "German", "Italian"]
+    let items = ["Item 1", "Item 2", "Item 3", "Item 4"]
     
     let formatter: PhoneNumberFormatter = PhoneNumberFormatter()
+    
+    @EnvironmentObject var authViewModel: AuthViewModel
     
     func validatePhoneNumber(_ phoneNumber: String) -> Bool {
         // Your phone number validation logic here
@@ -149,7 +151,7 @@ let languages = ["English", "Spanish", "French", "German", "Italian"]
                             }
                         } label: {
                             HStack {
-                                Text(serverName)
+                                Text(serverName).foregroundColor(.white)
                                 Spacer()
                                 Image("DarkArrow")
                             }
@@ -166,33 +168,30 @@ let languages = ["English", "Spanish", "French", "German", "Italian"]
                 }.padding()
                 
                 VStack(alignment: .leading){
-                    Text("Roomates").multilineTextAlignment(.leading).bold()
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
-                            ForEach(devices, id: \.self) { device in
-                                Button(action: {
-                                    // Code to be executed when the button is tapped
-                                }) {
-                                    Text(device)
-                                       .multilineTextAlignment(.leading)
-                                }
-                               .padding()
-                               .background(Color("TabViewColor"), in: RoundedRectangle(cornerRadius: 10))
-                               .foregroundColor(.black)
-                            }
-                        }
+                    Text("Roomates").multilineTextAlignment(.leading).bold().padding(.top).padding(.leading)
+                    List(items, id: \.self) { item in
+                        Text(item)
+                    }.padding(.all, 0)
+
+                }
+                
+                VStack {
+                    Spacer() // Pushes the content to the center vertically
+                    Button {
+                        authViewModel.logOut()
+                        authViewModel.isAuthenticated = false
+                    } label: {
+                        Text("Log out")
+                            .bold()
+                            .padding()
+                            .background(Color("StandardIconColor"))
+                            .foregroundColor(.white)
+                            .cornerRadius(10) // Optional: For rounded corners
                     }
-                    .overlay(
-                        Button(action: {
-                            // Code to be executed when the LightAdd button is tapped
-                        }) {
-                            Image("LightAdd")
-                        }
-                       .frame(maxWidth:.infinity, alignment:.trailing)
-                    )
-                    
-                }.padding()
-                Spacer()
+                    Spacer() // Pushes the content to the center vertically
+                }
+                .frame(maxWidth: .infinity, maxHeight: 50) // Makes the VStack take the full screen
+                 
             }.navigationTitle("Settings")
         }
     }
@@ -219,8 +218,4 @@ class PhoneNumberFormatter: Formatter {
 
         return "(\(areaCode)) \(prefix)-\(lineNumber)"
     }
-}
-
-#Preview {
-    Setting()
 }

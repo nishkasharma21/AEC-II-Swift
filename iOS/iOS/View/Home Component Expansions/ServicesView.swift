@@ -10,14 +10,19 @@ struct ServicesView: View {
       
             HStack(alignment: .center){
                 HStack {
-                    Text("Services").font(.largeTitle).fontWeight(.bold)
+                    Text("Services").font(.largeTitle).fontWeight(.bold).padding(.top)
                     Spacer()
                 }
             }
             Spacer()
-        
-            Text("Explore what Sense can offer as your all in one mobile security system.")
-                .fontWeight(.medium).foregroundColor(Color("ServicesDetailText")).multilineTextAlignment(.leading).border(.white)
+            
+            HStack{
+                Text("Explore what Sense can offer as your all in one mobile security system.")
+                    .fontWeight(.medium).foregroundColor(Color("ServicesDetailText")).multilineTextAlignment(.leading)
+                
+                Spacer()
+                
+            }
             
             ServicesButton(title: "Theft Detection", description: "Using AI algorithms and face detection, place Sense in your dorm to make sure no unwanted visitors can enter while you’re gone.",image: "TheftDetection", purchaseTitle: "Get a thief-free dorm.", bottomTextColor: "TheftDetectionText", backgroundColor: "TheftDetection", subtext1: "Your dorm.", subtext2: "Security at your fingertips.", purchaseDescription: "Powered by machine learning algorithms, Sense continuously monitors your living space. It  discerns between routine activities and potential threats, ensuring that any unauthorized access or suspicious movements are swiftly detected. With real-time alerts, Sense keeps you informed and in control. Seamlessly designed for mobile placement and discreet operation, Sense redefines dorm room security.", isAlreadyPurchased: false)
             

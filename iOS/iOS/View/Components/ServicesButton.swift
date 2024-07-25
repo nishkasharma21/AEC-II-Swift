@@ -35,12 +35,21 @@ struct ServicesButton: View {
         }) {
             VStack{
                 Image(image).padding(.top)
-                
-                VStack(alignment: .leading){
-                    Text(title).multilineTextAlignment(.leading).bold().font(.system(size:30)).foregroundColor(.black)
-                    Text(description).fontWeight(.medium).font(.system(size: 14)).foregroundColor(Color("ServicesDetailText")).multilineTextAlignment(.leading)
-                }
-                .padding()
+                HStack{
+                    VStack(alignment: .leading){
+                        
+                        Text(title).multilineTextAlignment(.leading).bold().font(.system(size:30)).foregroundColor(.white)
+                        HStack{
+                            Text(description).fontWeight(.medium).font(.system(size: 14)).foregroundColor(Color("ServicesDetailText")).multilineTextAlignment(.leading)
+                            Spacer()
+                        }
+                    }
+                    .padding()
+                    .padding(.leading)
+                    
+                    Spacer()
+                    
+                }.padding(.bottom)
             }
             .frame(width: 410)
             .background(Color("TabViewColor"))

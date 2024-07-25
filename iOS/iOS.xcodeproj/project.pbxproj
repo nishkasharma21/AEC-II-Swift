@@ -29,6 +29,9 @@
 		C93AF1652C499F1800D3B08D /* PairedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93AF1642C499F1800D3B08D /* PairedView.swift */; };
 		C96856882C5070EF00769AE2 /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96856872C5070EF00769AE2 /* VideoPlayer.swift */; };
 		C968568A2C5076B800769AE2 /* AVPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96856892C5076B800769AE2 /* AVPlayerViewModel.swift */; };
+		C96856A72C517CBB00769AE2 /* TempNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96856A62C517CBB00769AE2 /* TempNotificationView.swift */; };
+		C96856A92C51AC8700769AE2 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96856A82C51AC8700769AE2 /* AuthViewModel.swift */; };
+		C96856AB2C52AA2400769AE2 /* TempGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96856AA2C52AA2400769AE2 /* TempGroupView.swift */; };
 		C98A16382C39105900D461E8 /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98A16372C39105900D461E8 /* iOSApp.swift */; };
 		C98A163A2C39105900D461E8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98A16392C39105900D461E8 /* ContentView.swift */; };
 		C98A163C2C39105B00D461E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C98A163B2C39105B00D461E8 /* Assets.xcassets */; };
@@ -119,6 +122,9 @@
 		C93AF1872C49DE4200D3B08D /* TestTargetUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestTargetUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C96856872C5070EF00769AE2 /* VideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayer.swift; sourceTree = "<group>"; };
 		C96856892C5076B800769AE2 /* AVPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayerViewModel.swift; sourceTree = "<group>"; };
+		C96856A62C517CBB00769AE2 /* TempNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempNotificationView.swift; sourceTree = "<group>"; };
+		C96856A82C51AC8700769AE2 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		C96856AA2C52AA2400769AE2 /* TempGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempGroupView.swift; sourceTree = "<group>"; };
 		C98A16342C39105900D461E8 /* iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C98A16372C39105900D461E8 /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		C98A16392C39105900D461E8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -337,6 +343,7 @@
 				C994DB5A2C504C3500D345BD /* LaunchViewModel.swift */,
 				C9A95ADC2C505414005151B0 /* AppDelegate.swift */,
 				C96856892C5076B800769AE2 /* AVPlayerViewModel.swift */,
+				C96856A82C51AC8700769AE2 /* AuthViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -355,6 +362,8 @@
 				C994DB582C502F6700D345BD /* RoomateGroup.swift */,
 				C9A95ADE2C505562005151B0 /* Widget.swift */,
 				C96856872C5070EF00769AE2 /* VideoPlayer.swift */,
+				C96856A62C517CBB00769AE2 /* TempNotificationView.swift */,
+				C96856AA2C52AA2400769AE2 /* TempGroupView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -646,6 +655,7 @@
 				C917C6472C3A2B2F0041AEC9 /* PlaybackVideo.swift in Sources */,
 				C917C6412C3A1F270041AEC9 /* EmergencyAlertHistoryView.swift in Sources */,
 				C98A163A2C39105900D461E8 /* ContentView.swift in Sources */,
+				C96856A92C51AC8700769AE2 /* AuthViewModel.swift in Sources */,
 				C9A95ADD2C505414005151B0 /* AppDelegate.swift in Sources */,
 				C98A16652C3912A600D461E8 /* Home.swift in Sources */,
 				C994DB592C502F6700D345BD /* RoomateGroup.swift in Sources */,
@@ -659,8 +669,10 @@
 				C968568A2C5076B800769AE2 /* AVPlayerViewModel.swift in Sources */,
 				C93AF1652C499F1800D3B08D /* PairedView.swift in Sources */,
 				C917C64C2C3B22DF0041AEC9 /* ServicesButton.swift in Sources */,
+				C96856A72C517CBB00769AE2 /* TempNotificationView.swift in Sources */,
 				C9C576942C4EB2B1005D350A /* WebView.swift in Sources */,
 				C98A166C2C391F2400D461E8 /* HomeNotification.swift in Sources */,
+				C96856AB2C52AA2400769AE2 /* TempGroupView.swift in Sources */,
 				C98A16382C39105900D461E8 /* iOSApp.swift in Sources */,
 				C98A16692C3912BB00D461E8 /* Settings.swift in Sources */,
 				C994DB572C501E1400D345BD /* Login.swift in Sources */,
