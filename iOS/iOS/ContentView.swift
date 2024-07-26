@@ -26,12 +26,6 @@ struct ContentView: View {
                             Text("Discover")
                         }
                         .tag(2)
-                    GroupView()
-                        .tabItem {
-                            Image(systemName: "star.fill")
-                            Text("GroupView")
-                        }
-                        .tag(3)
                 }
                 .accentColor(.white)
             } else {

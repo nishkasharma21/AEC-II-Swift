@@ -32,7 +32,7 @@ struct NotificationView: View {
     }
 
     func checkForNotification() {
-        guard let url = URL(string: "http://172.20.10.2:8000/notifications") else { return }
+        guard let url = URL(string: "http://192.168.1.95:8000/notifications") else { return }
 
         let request = URLRequest(url: url)
 

@@ -24,7 +24,7 @@ class AudioPlayer: ObservableObject {
     }
     
     func startStreaming() {
-        guard let url = URL(string: "http://172.20.10.2:8000/audio") else { return }
+        guard let url = URL(string: "http://192.168.1.95:8000/audio") else { return }
         
         playerItem = AVPlayerItem(url: url)
         player = AVPlayer(playerItem: playerItem)

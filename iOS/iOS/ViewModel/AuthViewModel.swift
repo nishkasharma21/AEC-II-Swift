@@ -6,7 +6,7 @@ class AuthViewModel: ObservableObject {
     @Published var userId: Int?
 
     func logIn(email: String, password: String) {
-        guard let url = URL(string: "http://172.20.10.2:8000/login") else { return }
+        guard let url = URL(string: "http://192.168.1.95:8000/login") else { return }
 
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -42,7 +42,7 @@ class AuthViewModel: ObservableObject {
     }
 
     func logOut() {
-        guard let url = URL(string: "http://172.20.10.2:8000/logout") else { return }
+        guard let url = URL(string: "http://192.168.1.95:8000/logout") else { return }
 
         var request = URLRequest(url: url)
         request.httpMethod = "GET"

@@ -97,55 +97,85 @@ struct SignUpView: View {
     }
 
     private func signUp() {
-        emailErrorMessage = nil
+      emailErrorMessage = nil
 
-        guard !email.isEmpty, !password.isEmpty else {
+      guard !email.isEmpty, !password.isEmpty else {
+        isSignUpSuccessful = false
+        emailErrorMessage = "Email and password are required"
+        return
+      }
+
+      guard isValidEmail(email) else {
+        isSignUpSuccessful = false
+        emailErrorMessage = "Invalid email format"
+        return
+      }
+
+      let url = URL(string: "http://192.168.1.95:8000/signup")!
+      var request = URLRequest(url: url)
+      request.httpMethod = "POST"
+      request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+      let body: [String: String] = ["email": email, "password": password]
+      request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
+
+      let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        if let error = error {
+          print("Error: \(error)")
+          DispatchQueue.main.async {
             isSignUpSuccessful = false
-            emailErrorMessage = "Email and password are required"
-            return
+            emailErrorMessage = nil
+          }
+          return
         }
 
-        guard isValidEmail(email) else {
+        guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
+          DispatchQueue.main.async {
             isSignUpSuccessful = false
-            emailErrorMessage = "Invalid email format"
-            return
+            emailErrorMessage = nil
+          }
+          return
         }
 
-        let url = URL(string: "http://172.20.10.2:8000/signup")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        guard let data = data else {
+          DispatchQueue.main.async {
+            isSignUpSuccessful = false
+            emailErrorMessage = "Failed to receive response data"
+          }
+          return
+        }
 
-        let body: [String: String] = ["email": email, "password": password]
-        request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
-
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print("Error: \(error)")
-                DispatchQueue.main.async {
-                    isSignUpSuccessful = false
-                    emailErrorMessage = nil
-                }
-                return
-            }
-
-            guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
-                DispatchQueue.main.async {
-                    isSignUpSuccessful = false
-                    emailErrorMessage = nil
-                }
-                return
-            }
-
+        do {
+          let json = try JSONSerialization.jsonObject(with: data, options: [])
+          guard let responseDict = json as? [String: Any],
+                let message = responseDict["message"] as? String, message == "Sign up successful!",
+                let userId = responseDict["user_id"] as? Int else {
             DispatchQueue.main.async {
-                isSignUpSuccessful = true
-                authViewModel.isAuthenticated = true
-                emailErrorMessage = nil
+              isSignUpSuccessful = false
+              emailErrorMessage = "Failed to parse response data"
             }
-        }
+            return
+          }
 
-        task.resume()
+          DispatchQueue.main.async {
+            isSignUpSuccessful = true
+            authViewModel.isAuthenticated = true
+            emailErrorMessage = nil
+            // Store the user_id in a secure way (e.g., Keychain)
+            authViewModel.userId = userId
+          }
+        } catch {
+          print("Error parsing JSON response: \(error)")
+          DispatchQueue.main.async {
+            isSignUpSuccessful = false
+            emailErrorMessage = "Failed to parse response data"
+          }
+        }
+      }
+
+      task.resume()
     }
+
 
     private func isValidEmail(_ email: String) -> Bool {
         let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}"

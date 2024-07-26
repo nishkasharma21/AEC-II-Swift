@@ -35,6 +35,7 @@ struct Home: View {
     @StateObject private var audioPlayer = AudioPlayer()
     @State private var player = AVPlayer(url: URL(string: "https://archive.org/download/four_days_of_gemini_4/four_days_of_gemini_4_512kb.mp4")!)
     @State private var showSettings = false
+    @State private var showMakeGroup = false
     @State private var showAddSense = false
     @State private var homeNotificationBaseColorBlue = "HomeNotificationBaseBlue"
     @State private var homeNotificationLineColorBlue = "HomeNotificationLineAndTextBlue"
@@ -71,7 +72,7 @@ struct Home: View {
                     Image(systemName: "gearshape.fill").font(.system(size: 20)).foregroundColor(.white).padding(.trailing)
                 }).padding(.trailing)
                 Button(action: {
-                    // Handle Add Sense action
+                    showMakeGroup = true
                 }, label: {
                     Image(systemName: "person.fill.badge.plus").font(.system(size: 20)).foregroundColor(.white)
                 }).padding(.trailing)
@@ -116,12 +117,12 @@ struct Home: View {
                         .onAppear(perform: addItem)
                 }
                 
-                CustomWebView(url: URL(string: "http://172.20.10.2:8000/video_stream")!)
+                CustomWebView(url: URL(string: "http://192.168.1.95:8000/video_stream")!)
                     .frame(height: 200)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                     .padding([.horizontal, .top])
                 
-                VideoPlayerUIView(videoURL: URL(string: "http://172.20.10.2:8000/video_stream")!)
+                VideoPlayerUIView(videoURL: URL(string: "http://192.168.1.95:8000/video_stream")!)
                     .edgesIgnoringSafeArea(.all)  // To make the video fullscreen
                 
                 ScrollView(.horizontal, showsIndicators: false){
@@ -160,6 +161,9 @@ struct Home: View {
         .sheet(isPresented: $showSettings) {
             Setting() // Present Settings view
         }
+        .sheet(isPresented: $showMakeGroup) {
+            GroupView() // Present Settings view
+        }
         
     }
     
@@ -175,7 +179,7 @@ struct Home: View {
     }
 
     func checkForNotification() {
-        guard let url = URL(string: "http://172.20.10.2:8000/notifications") else { return }
+        guard let url = URL(string: "http://192.168.1.95:8000/notifications") else { return }
 
         let request = URLRequest(url: url)
 
