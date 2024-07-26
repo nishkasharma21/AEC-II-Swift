@@ -17,8 +17,9 @@ struct GroupView: View {
     @State private var adminGroups: [String] = []  // To track admin groups
     @State private var isAdminOfGroup: Bool = false  // To indicate if user is admin
     @State private var isGroupCreatedSuccessfully: Bool = false
+    @State private var createdGroupName: String = ""
+    @State private var subtitle: String = "Here you can add users to view your room's data."
 
-    
     @EnvironmentObject var authViewModel: AuthViewModel
     
     var body: some View {
@@ -27,8 +28,8 @@ struct GroupView: View {
                 Spacer()
                 
                 if isAdminOfGroup {
-                    HStack{
-                        VStack(alignment:.leading){
+                    HStack {
+                        VStack(alignment: .leading) {
                             Text(adminGroups.first ?? "No Group")
                                 .font(.largeTitle)
                                 .fontWeight(.bold)
@@ -36,12 +37,13 @@ struct GroupView: View {
                             Text("Add more people to your room.")
                                 .font(.subheadline)
                                 .padding(.horizontal)
-                        }.padding(.leading)
+                        }
+                        .padding(.leading)
                         Spacer()
                     }
                     
                     HStack {
-                        TextField("Roomate email", text: $userEmail)
+                        TextField("Roommate email", text: $userEmail)
                             .textInputAutocapitalization(.never)
                             .padding(.bottom)
                             .background(
@@ -61,50 +63,28 @@ struct GroupView: View {
                         .padding()
                         .disabled(isLoading || userEmail.isEmpty)
                         .background(Color("StandardIconColor"))
-                        .disabled(isLoading)
                         .clipShape(RoundedRectangle(cornerRadius: 30))
-                    }.padding(.horizontal,15)
+                    }
+                    .padding(.horizontal, 15)
                     
                 } else {
                     VStack {
-                        HStack{
-                            VStack(alignment:.leading){
-                                Text("Add Roommates")
-                                    .font(.largeTitle)
-                                    .fontWeight(.bold)
-                                    .padding()
-                                Text("Here you can add users to view your room's data.")
-                                    .font(.subheadline)
-                                    .padding(.horizontal)
-                            }.padding(.leading)
-                            Spacer()
-                        }
-                        HStack{
-                            TextField("Group Name", text: $groupName)
-                                .textInputAutocapitalization(.never)
-                                .padding(.bottom)
-                                .background(
-                                    VStack {
-                                        Spacer()
-                                        Rectangle()
-                                            .frame(height: 1)
-                                            .foregroundColor(.gray)
-                                    }
-                                )
-                                .padding()
-                            
-                            Button("Create Group") {
-                                createGroup(groupName: groupName)
-                            }
-                            .padding()
-                            .background(Color("StandardIconColor"))
-                            .foregroundColor(.white)
-                            .disabled(isLoading)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                        }.padding(.horizontal)
                         if isGroupCreatedSuccessfully {
                             HStack {
-                                TextField("Roomate email", text: $userEmail)
+                                VStack(alignment: .leading) {
+                                    Text(createdGroupName)
+                                        .font(.largeTitle)
+                                        .fontWeight(.bold)
+                                        .padding()
+                                    Text(subtitle)
+                                        .font(.subheadline)
+                                        .padding(.horizontal)
+                                }
+                                .padding(.leading)
+                                Spacer()
+                            }
+                            HStack {
+                                TextField("Roommate email", text: $userEmail)
                                     .textInputAutocapitalization(.never)
                                     .padding(.bottom)
                                     .background(
@@ -125,39 +105,80 @@ struct GroupView: View {
                                 .disabled(isLoading || userEmail.isEmpty)
                                 .background(Color("StandardIconColor"))
                                 .clipShape(RoundedRectangle(cornerRadius: 30))
-                            }.padding(.horizontal, 15)
+                            }
+                            .padding(.horizontal, 15)
+                        } else {
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text("Make a room")
+                                        .font(.largeTitle)
+                                        .fontWeight(.bold)
+                                        .padding()
+                                    Text("Here you can add users to view your room's data.")
+                                        .font(.subheadline)
+                                        .padding(.horizontal)
+                                }
+                                .padding(.leading)
+                                Spacer()
+                            }
+                            HStack {
+                                TextField("Group Name", text: $groupName)
+                                    .textInputAutocapitalization(.never)
+                                    .padding(.bottom)
+                                    .background(
+                                        VStack {
+                                            Spacer()
+                                            Rectangle()
+                                                .frame(height: 1)
+                                                .foregroundColor(.gray)
+                                        }
+                                    )
+                                    .padding()
+                                
+                                Button("Create Room") {
+                                    createGroup(groupName: groupName)
+                                }
+                                .padding()
+                                .background(Color("StandardIconColor"))
+                                .foregroundColor(.white)
+                                .disabled(isLoading)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                            }
+                            .padding(.horizontal)
                         }
                     }
                 }
                 Spacer()
             }
-
             
-            
-
-            
-            VStack{
-                if !emails.isEmpty {
-                    List(emails, id: \.self) { email in
-                        HStack {
-                            Text(email)
-                            Spacer()
-                            Button(action: {
-                                removeUserFromGroup(groupId: selectedGroupId, email: email)
-                            }) {
-                                Image(systemName: "trash.fill")
-                                    .foregroundColor(.blue)
+            VStack {
+                HStack{
+                    VStack(alignment: .leading){
+                        Text("Roomates").fontWeight(.semibold).padding(.leading).padding(.leading)
+                        if !emails.isEmpty {
+                            List(emails, id: \.self) { email in
+                                HStack {
+                                    Text(email)
+                                    Spacer()
+                                    Button(action: {
+                                        removeUserFromGroup(groupId: selectedGroupId, email: email)
+                                    }) {
+                                        Image(systemName: "trash.fill")
+                                            .foregroundColor(.blue)
+                                    }
+                                }
+                                .padding()
                             }
+                            .padding()
+                        } else {
+                            Text("No roommates in room")
+                                .padding().padding(.leading)
                         }
-                        .padding()
                     }
-                    .padding()
-                } else {
-                    Text("No roomates in group")
-                        .padding()
+                    Spacer()
                 }
+                Spacer()
             }
-
         }
         .alert(item: $alertMessage) { message in
             Alert(title: Text(message.title), message: Text(message.message))
@@ -165,6 +186,7 @@ struct GroupView: View {
         .onAppear(perform: {
             checkAdminGroups { groupId in
                 if let groupId = groupId {
+                    self.selectedGroupId = groupId // Update selectedGroupId
                     fetchGroupEmails(groupId: groupId)
                 } else {
                     self.isLoading = false // Stop loading if no admin group is found
@@ -209,9 +231,12 @@ struct GroupView: View {
                             let message = responseJSON["message"] as? String ?? "Unknown response"
                             print(message)  // Update the UI or handle success
                             self.isGroupCreatedSuccessfully = true
+                            self.createdGroupName = groupName // Set the created group name
+                            self.subtitle = "Add more people to your room." // Update subtitle
                             if let groupId = responseJSON["group_id"] as? Int {
                                 self.selectedGroupId = groupId
                                 self.fetchGroupEmails(groupId: groupId)  // Fetch emails after creating group
+                            
                             }
                         }
                     } else {
@@ -253,7 +278,6 @@ struct GroupView: View {
         }.resume()
     }
 
-    
     private func addUserToGroup(groupId: Int, userEmail: String) {
         guard let userId = authViewModel.userId else {
             print("No userId found")
@@ -321,7 +345,6 @@ struct GroupView: View {
     private func fetchGroupEmails(groupId: Int) {
         guard let url = URL(string: "http://192.168.1.95:8000/get_group_emails?group_id=\(groupId)") else {
             DispatchQueue.main.async {
-              
                 self.isLoading = false
             }
             return
@@ -333,7 +356,6 @@ struct GroupView: View {
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 DispatchQueue.main.async {
-                   
                     self.isLoading = false
                 }
                 return
@@ -341,7 +363,6 @@ struct GroupView: View {
 
             guard let data = data else {
                 DispatchQueue.main.async {
-                   
                     self.isLoading = false
                 }
                 return
@@ -356,20 +377,17 @@ struct GroupView: View {
                     }
                 } else {
                     DispatchQueue.main.async {
-                        
                         self.isLoading = false
                     }
                 }
             } catch {
                 DispatchQueue.main.async {
-               
                     self.isLoading = false
                 }
             }
         }.resume()
     }
 
-    
     private func removeUserFromGroup(groupId: Int, email: String) {
         guard let url = URL(string: "http://192.168.1.95:8000/remove_user_from_group") else {
             print("Invalid URL")
@@ -490,53 +508,6 @@ struct GroupView: View {
             }
         }.resume()
     }
-
-
-    private func fetchGroupEmails(groupId: String) {
-        guard let url = URL(string: "http://192.168.1.95:8000/get_group_emails?group_id=\(groupId)") else {
-            DispatchQueue.main.async {
-                
-            }
-            return
-        }
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                DispatchQueue.main.async {
-                    
-                }
-                return
-            }
-
-            guard let data = data else {
-                DispatchQueue.main.async {
-                    
-                }
-                return
-            }
-
-            do {
-                // Use JSONSerialization to parse the JSON data
-                if let jsonResponse = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-                   let emails = jsonResponse["emails"] as? [String] {
-                    DispatchQueue.main.async {
-                        self.emails = emails
-                    }
-                } else {
-                    DispatchQueue.main.async {
-                        
-                    }
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    
-                }
-            }
-        }.resume()
-    }
 }
 
 struct User: Identifiable, Codable {
@@ -553,7 +524,6 @@ struct AlertMessage: Identifiable {
 struct GroupEmailsResponse: Codable {
     let emails: [String]
 }
-
 
 #Preview{
     GroupView()

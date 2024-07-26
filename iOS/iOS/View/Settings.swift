@@ -167,14 +167,6 @@ struct Setting: View {
                     
                 }.padding()
                 
-                VStack(alignment: .leading){
-                    Text("Roomates").multilineTextAlignment(.leading).bold().padding(.top).padding(.leading)
-                    List(items, id: \.self) { item in
-                        Text(item)
-                    }.padding(.all, 0)
-
-                }
-                
                 VStack {
                     Spacer() // Pushes the content to the center vertically
                     Button {
@@ -182,6 +174,7 @@ struct Setting: View {
                         authViewModel.isAuthenticated = false
                     } label: {
                         Text("Log out")
+                            .frame(minWidth: 370)
                             .bold()
                             .padding()
                             .background(Color("StandardIconColor"))
@@ -191,6 +184,8 @@ struct Setting: View {
                     Spacer() // Pushes the content to the center vertically
                 }
                 .frame(maxWidth: .infinity, maxHeight: 50) // Makes the VStack take the full screen
+                Spacer()
+                Spacer()
                  
             }.navigationTitle("Settings")
         }
